@@ -50,7 +50,7 @@ function App() {
       {isLoading && <Loader></Loader>}
       {isError&&<ErrorMessage></ErrorMessage>}
       {movies.length > 0 && <MovieGrid movies={movies} onSelect={handleSelectMovie}></MovieGrid>}
-      { data && <ReactPaginate
+      { data && totalPages>1 && <ReactPaginate
           pageCount={totalPages}
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
