@@ -41,15 +41,17 @@ function App() {
     return
   }
   }, [data]);
+  const { results: movies = [], total_pages: totalPages = 0 } = data ?? {};
+
 
   return (
     <>
       <SearchBar onSubmit={handleSearch}></SearchBar>
       {isLoading && <Loader></Loader>}
       {isError&&<ErrorMessage></ErrorMessage>}
-      {data?.results?.length > 0 && <MovieGrid movies={data.results} onSelect={handleSelectMovie}></MovieGrid>}
+      {movies.length > 0 && <MovieGrid movies={movies} onSelect={handleSelectMovie}></MovieGrid>}
       { data && <ReactPaginate
-          pageCount={data.total_pages}
+          pageCount={totalPages}
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
           onPageChange={({ selected }) => setCurrentPage(selected + 1)}
