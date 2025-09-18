@@ -8,7 +8,7 @@ import MovieModal from '../MovieModal/MovieModal';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import ReactPaginate from 'react-paginate';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import css from "./App.module.css"
 
 
@@ -33,7 +33,8 @@ function App() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["movies", query, currentPage],
     queryFn: () => fetchMovies(query, currentPage),
-    enabled: query.length > 0
+    enabled: query.length > 0,
+    placeholderData: keepPreviousData
   })
   useEffect(() => {
   if (data && data.results.length === 0) {
@@ -59,7 +60,8 @@ function App() {
           containerClassName={css.pagination}
           activeClassName={css.active}
           nextLabel="→"
-          previousLabel="←"
+        previousLabel="←"
+        
         />}
       {selectedMovie&&<MovieModal movie={selectedMovie} onClose={()=>setSelectedMovie(null)}></MovieModal>}
       <Toaster></Toaster>

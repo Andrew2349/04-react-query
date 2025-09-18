@@ -3,12 +3,12 @@ import type { Movie } from "../../types/movie"
 import { createPortal } from "react-dom"
 import { useEffect } from "react"
 
-interface ModalMovieProps{
+interface MovieModalProps{
     movie: Movie,
     onClose:()=>void
 }
 
-function MovieModal({ onClose, movie }: ModalMovieProps) {
+function MovieModal({ onClose, movie }: MovieModalProps) {
   function handleBackdropClick(event: React.MouseEvent<HTMLDivElement>) {
     if (event.target === event.currentTarget) {
         onClose()
@@ -28,7 +28,11 @@ function MovieModal({ onClose, movie }: ModalMovieProps) {
 	  document.removeEventListener("keydown", handleKeyDown);
 	  document.body.style.overflow = "";
 	};
-}, [onClose]);
+  }, [onClose]);
+   const modalRoot = document.getElementById("modal-root");
+  if (!modalRoot) {
+    return null;
+  }
 
     return createPortal(
         <div className={css.backdrop} onClick={handleBackdropClick} role="dialog" aria-modal="true">
@@ -53,7 +57,7 @@ function MovieModal({ onClose, movie }: ModalMovieProps) {
     </div>
   </div>
 </div>,
-    document.getElementById("modal-root") as HTMLDivElement
+    modalRoot
   )
   
 }
